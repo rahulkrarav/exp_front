@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ReactGA from 'react-ga4';
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
