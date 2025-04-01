@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactGA from 'react-ga4'
 import { Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -6,12 +7,27 @@ import Spinner from "../components/Spinner";
 const Register = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
+  // Initialize Google Analytics
+  useEffect(() => {
+    ReactGA.initialize("G-M8E6Z3NGZV"); // Replace with your GA Measurement ID
+  }, []);
+  
   //from submit
   const submitHandler = async (values) => {
     try {
       setLoading(true);
       await axios.post("https://exp-backend-01.onrender.com/api/v1/users/register", values);
       message.success("Registeration Successfull");
+       // Track user info as a lead
+   ReactGA.set({
+    user_id: values.email, // You can use email as a unique identifier
+    name: values.name,
+    email: values.email,
+    phone: values.phone,
+    address: values.address,
+    gender: values.gender,
+  });
       setLoading(false);
       navigate("/login");
     } catch (error) {
